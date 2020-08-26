@@ -1,0 +1,3 @@
+# Project exclude paths
+/modules/liberty-gorilla-framework-common/target/
+/modules/liberty-gorilla-framework-core/target/
