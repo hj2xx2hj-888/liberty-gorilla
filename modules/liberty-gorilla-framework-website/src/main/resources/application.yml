@@ -3,4 +3,5 @@ redis:
   host: 47.98.147.232
   password: testchs1234!
   port: 1438
-  timeout: 6000
+  timeout:
+   aaa: 5000

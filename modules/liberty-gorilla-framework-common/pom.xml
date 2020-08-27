@@ -12,12 +12,6 @@
     <artifactId>liberty-gorilla-framework-common</artifactId>
 
     <dependencies>
-    <!-- json -->
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.9.8</version>
-    </dependency>
     <dependency>
         <!--zip文件压缩/解压-->
         <groupId>org.apache.commons</groupId>
