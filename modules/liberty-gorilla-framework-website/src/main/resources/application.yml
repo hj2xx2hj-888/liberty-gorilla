@@ -4,4 +4,4 @@ redis:
   password: testchs1234!
   port: 1438
   timeout:
-   aaa: 5000
+   aaa: w

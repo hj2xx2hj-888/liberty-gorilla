@@ -2,15 +2,14 @@ package com.liberty.gorilla.framework.core;
 
 
 import com.liberty.gorilla.framework.core.properties.GorillaSystemProperties;
+
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
-import org.yaml.snakeyaml.Yaml;
 
 
 import java.io.IOException;
@@ -44,15 +43,15 @@ public class GorillaApplicationStartRun {
             ClassPathResource classPathResource = new ClassPathResource("application.properties");
             InputStream is = classPathResource.getInputStream();
             properties.load(is);
+            Properties propertiesYml = getYmlProperties();
+            if (propertiesYml != null) {
+                Set<Map.Entry<Object, Object>> entrySet = propertiesYml.entrySet();
+                for (Map.Entry<Object, Object> entry : entrySet) {
+                    properties.put(entry.getKey(), entry.getValue());
+                }
+            }
         } catch (IOException e) {
             System.out.println("未读取到配置文件[application.properties,application.yml]");
-        }
-        Properties propertiesYml = getYmlProperties();
-        if (propertiesYml != null) {
-            Set<Map.Entry<Object, Object>> entrySet = propertiesYml.entrySet();
-            for (Map.Entry<Object, Object> entry : entrySet) {
-                properties.put(entry.getKey(), entry.getValue());
-            }
         }
         return properties;
     }
