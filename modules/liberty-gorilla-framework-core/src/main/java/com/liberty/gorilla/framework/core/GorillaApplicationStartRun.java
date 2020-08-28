@@ -1,6 +1,7 @@
 package com.liberty.gorilla.framework.core;
 
 
+import com.liberty.gorilla.framework.core.properties.GorillaSystemProperties;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,9 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 @ComponentScan({"com.liberty.gorilla.framework"})
 @SpringBootApplication()
@@ -30,23 +33,31 @@ public class GorillaApplicationStartRun {
         SpringApplication application = new SpringApplication(GorillaApplicationStartRun.class);
         application.setBannerMode(Banner.Mode.LOG);
         ConfigurableApplicationContext applicationContext = application.run(args);
-        getApplicationProperties();
+        GorillaSystemProperties properties = getApplicationProperties();
+        System.out.println(properties.toString());
         System.out.println("**Gorilla***应用:已启动成功!");
     }
 
-    private static Properties getApplicationProperties() {
-        Properties properties = new Properties();
+    private static GorillaSystemProperties getApplicationProperties() {
+        GorillaSystemProperties properties = new GorillaSystemProperties();
         try {
             ClassPathResource classPathResource = new ClassPathResource("application.properties");
-            InputStream is  = classPathResource.getInputStream();
+            InputStream is = classPathResource.getInputStream();
             properties.load(is);
         } catch (IOException e) {
             System.out.println("未读取到配置文件[application.properties,application.yml]");
         }
+        Properties propertiesYml = getYmlProperties();
+        if (propertiesYml != null) {
+            Set<Map.Entry<Object, Object>> entrySet = propertiesYml.entrySet();
+            for (Map.Entry<Object, Object> entry : entrySet) {
+                properties.put(entry.getKey(), entry.getValue());
+            }
+        }
         return properties;
     }
 
-    public static Properties properties() {
+    public static Properties getYmlProperties() {
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         yaml.setResources(new ClassPathResource("application.yml"));
         return yaml.getObject();
