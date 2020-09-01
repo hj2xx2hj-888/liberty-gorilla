@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-@ComponentScan({"com.liberty.gorilla.framework"})
+@ComponentScan({"com.liberty.gorilla.framework","com.liberty.gorilla.application.controller"})
 @SpringBootApplication()
 public class GorillaApplicationStartRun {
 

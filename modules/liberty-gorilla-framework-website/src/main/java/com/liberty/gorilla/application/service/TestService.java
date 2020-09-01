@@ -1,5 +1,6 @@
 package com.liberty.gorilla.application.service;
 
-public class TestService {
+public interface TestService {
 
+    String sayHello();
 }
